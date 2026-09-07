@@ -9,6 +9,7 @@ import {
   testimonials,
   hours,
   social,
+  asset,
 } from "./data";
 
 export default function Home() {
@@ -18,7 +19,7 @@ export default function Home() {
       <header className="nav">
         <div className="nav-inner">
           <div className="brand">
-            <img src="/img/logo.png" alt="Mi Rey" className="brand-logo" />
+            <img src={asset("/img/logo.png")} alt="Mi Rey" className="brand-logo" />
             <span className="brand-name">Mi Rey Taquería &amp; Grill</span>
           </div>
           <nav className="nav-links">
@@ -36,11 +37,11 @@ export default function Home() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-media">
-          <img src="/img/spread.png" alt="Platillos mexicanos" />
+          <img src={asset("/img/spread.png")} alt="Platillos mexicanos" />
           <div className="hero-overlay" />
         </div>
         <div className="hero-content">
-          <img src="/img/logo.png" alt="Mi Rey" className="hero-crown" />
+          <img src={asset("/img/logo.png")} alt="Mi Rey" className="hero-crown" />
           <p className="eyebrow">Wilmington, NC · Comida Mexicana</p>
           <h1>{hero.title}</h1>
           <p className="hero-text">{hero.text}</p>
@@ -88,7 +89,7 @@ export default function Home() {
       {/* STORY */}
       <section className="story" id="story">
         <div className="story-img">
-          <img src="/img/tostada2.png" alt="Tostada de birria" />
+          <img src={asset("/img/tostada2.png")} alt="Tostada de birria" />
         </div>
         <div className="story-body">
           <h2>{story.title}</h2>
@@ -151,7 +152,7 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="footer">
-        <img src="/img/logo.png" alt="Mi Rey" className="footer-logo" />
+        <img src={asset("/img/logo.png")} alt="Mi Rey" className="footer-logo" />
         <div className="socials">
           {social.map((s) => (
             <span key={s} className="social-chip">

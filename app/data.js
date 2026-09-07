@@ -1,5 +1,10 @@
 // Contenido compartido de Mi Rey Taquería & Grill, extraído del sitio original.
 
+// Prefijo para rutas de imágenes (necesario en GitHub Pages, donde el sitio
+// vive bajo /<repo>/). En local es "".
+export const BP = process.env.NEXT_PUBLIC_BASE_PATH || "";
+export const asset = (p) => `${BP}${p}`;
+
 export const info = {
   name: "Mi Rey",
   full: "Mi Rey Taquería & Grill",
@@ -18,11 +23,11 @@ export const hero = {
 };
 
 export const featured = [
-  { src: "/img/spread.png", alt: "Mesa llena de platillos mexicanos" },
-  { src: "/img/tostada_clean.png", alt: "Tostada de birria con crema y queso" },
-  { src: "/img/chimichanga.png", alt: "Chimichanga con arroz mexicano" },
-  { src: "/img/featured_clean.png", alt: "Selección de platillos destacados" },
-  { src: "/img/tostada2.png", alt: "Tostada de asada montada" },
+  { src: asset("/img/spread.png"), alt: "Mesa llena de platillos mexicanos" },
+  { src: asset("/img/tostada_clean.png"), alt: "Tostada de birria con crema y queso" },
+  { src: asset("/img/chimichanga.png"), alt: "Chimichanga con arroz mexicano" },
+  { src: asset("/img/featured_clean.png"), alt: "Selección de platillos destacados" },
+  { src: asset("/img/tostada2.png"), alt: "Tostada de asada montada" },
 ];
 
 export const specials = [

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   info,
   hero,
@@ -13,20 +14,43 @@ import {
 } from "./data";
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [zoom, setZoom] = useState(null);
+  const openZoom = (src, alt) => setZoom({ src, alt });
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <div className="site">
       {/* NAV */}
       <header className="nav">
         <div className="nav-inner">
           <div className="brand">
-            <img src={asset("/img/logo.png")} alt="Mi Rey" className="brand-logo" />
+            <img
+              src={asset("/img/logo.png")}
+              alt="Mi Rey"
+              className="brand-logo zoomable"
+              onClick={() => openZoom(asset("/img/logo.png"), "Mi Rey")}
+            />
             <span className="brand-name">Mi Rey Taquería &amp; Grill</span>
           </div>
-          <nav className="nav-links">
-            <a href="#menu">Menu</a>
-            <a href="#specials">Specials</a>
-            <a href="#story">Our Story</a>
-            <a href="#contact">Contact</a>
+          <button
+            className="hamburger"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <nav className={"nav-links" + (menuOpen ? " open" : "")}>
+            <a href="#menu" onClick={closeMenu}>Menu</a>
+            <a href="#specials" onClick={closeMenu}>Specials</a>
+            <a href="#story" onClick={closeMenu}>Our Story</a>
+            <a href="#contact" onClick={closeMenu}>Contact</a>
+            <a className="nav-order" href={`tel:${info.phoneHref}`} onClick={closeMenu}>
+              Order Now
+            </a>
           </nav>
           <a className="btn-gold" href={`tel:${info.phoneHref}`}>
             Order Now
@@ -37,12 +61,22 @@ export default function Home() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-media">
-          <img src={asset("/img/spread.png")} alt="Platillos mexicanos" />
+          <img
+            src={asset("/img/spread.png")}
+            alt="Mexican dishes"
+            className="zoomable"
+            onClick={() => openZoom(asset("/img/spread.png"), "Mexican dishes")}
+          />
           <div className="hero-overlay" />
         </div>
         <div className="hero-content">
-          <img src={asset("/img/logo.png")} alt="Mi Rey" className="hero-crown" />
-          <p className="eyebrow">Wilmington, NC · Comida Mexicana</p>
+          <img
+            src={asset("/img/logo.png")}
+            alt="Mi Rey"
+            className="hero-crown zoomable"
+            onClick={() => openZoom(asset("/img/logo.png"), "Mi Rey")}
+          />
+          <p className="eyebrow">Wilmington, NC · Mexican Food</p>
           <h1>{hero.title}</h1>
           <p className="hero-text">{hero.text}</p>
           <a className="btn-gold big" href={`tel:${info.phoneHref}`}>
@@ -56,12 +90,17 @@ export default function Home() {
         <div className="section-head">
           <span className="ornament">♛</span>
           <h2>Featured Dishes</h2>
-          <p>Recetas jaliscienses hechas con amor y herencia.</p>
+          <p>Jalisco recipes made with love and heritage.</p>
         </div>
         <div className="gallery">
           {featured.map((img, i) => (
             <figure key={i} className={`g-item g-${i}`}>
-              <img src={img.src} alt={img.alt} />
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="zoomable"
+                onClick={() => openZoom(img.src, img.alt)}
+              />
             </figure>
           ))}
         </div>
@@ -89,7 +128,12 @@ export default function Home() {
       {/* STORY */}
       <section className="story" id="story">
         <div className="story-img">
-          <img src={asset("/img/tostada2.png")} alt="Tostada de birria" />
+          <img
+            src={asset("/img/tostada2.png")}
+            alt="Birria tostada"
+            className="zoomable"
+            onClick={() => openZoom(asset("/img/tostada2.png"), "Birria tostada")}
+          />
         </div>
         <div className="story-body">
           <h2>{story.title}</h2>
@@ -105,7 +149,7 @@ export default function Home() {
       <section className="testi">
         <div className="section-head">
           <span className="ornament">♛</span>
-          <h2>Lo que dicen nuestros reyes</h2>
+          <h2>What Our Guests Say</h2>
         </div>
         <div className="testi-grid">
           {testimonials.map((t) => (
@@ -152,7 +196,12 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="footer">
-        <img src={asset("/img/logo.png")} alt="Mi Rey" className="footer-logo" />
+        <img
+          src={asset("/img/logo.png")}
+          alt="Mi Rey"
+          className="footer-logo zoomable"
+          onClick={() => openZoom(asset("/img/logo.png"), "Mi Rey")}
+        />
         <div className="socials">
           {social.map((s) => (
             <span key={s} className="social-chip">
@@ -165,6 +214,25 @@ export default function Home() {
           Order Now → {info.phone}
         </a>
       </footer>
+
+      {/* LIGHTBOX */}
+      {zoom && (
+        <div
+          className="lightbox"
+          onClick={() => setZoom(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            className="lightbox-close"
+            onClick={() => setZoom(null)}
+            aria-label="Close"
+          >
+            ×
+          </button>
+          <img src={zoom.src} alt={zoom.alt} onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
 
       <style jsx>{`
         .site {
@@ -201,6 +269,7 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 1.5rem;
+          position: relative;
         }
         .brand {
           display: flex;
@@ -250,6 +319,30 @@ export default function Home() {
           padding: 0.9rem 2.4rem;
           font-size: 1rem;
           letter-spacing: 2px;
+        }
+        .nav-order {
+          display: none;
+        }
+        .hamburger {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 42px;
+          height: 42px;
+          background: transparent;
+          border: 1px solid rgba(230, 182, 76, 0.5);
+          border-radius: 10px;
+          cursor: pointer;
+          padding: 0 9px;
+        }
+        .hamburger span {
+          display: block;
+          height: 2px;
+          width: 100%;
+          background: var(--gold-soft);
+          border-radius: 2px;
+          transition: transform 0.25s, opacity 0.2s;
         }
 
         /* HERO */
@@ -589,9 +682,99 @@ export default function Home() {
           padding-bottom: 2px;
         }
 
+        /* ZOOMABLE IMAGES */
+        .zoomable {
+          cursor: zoom-in;
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+          position: fixed;
+          inset: 0;
+          z-index: 1000;
+          background: rgba(7, 11, 30, 0.92);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4vw;
+          animation: fade 0.2s ease;
+          cursor: zoom-out;
+        }
+        .lightbox img {
+          max-width: 96vw;
+          max-height: 90vh;
+          width: auto;
+          height: auto;
+          border-radius: 12px;
+          border: 3px solid var(--gold);
+          box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+          cursor: default;
+          animation: pop 0.22s ease;
+        }
+        .lightbox-close {
+          position: fixed;
+          top: 18px;
+          right: 22px;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          border: 1px solid rgba(230, 182, 76, 0.6);
+          background: rgba(12, 18, 51, 0.8);
+          color: var(--gold-soft);
+          font-size: 1.8rem;
+          line-height: 1;
+          cursor: pointer;
+        }
+        @keyframes fade {
+          from {
+            opacity: 0;
+          }
+        }
+        @keyframes pop {
+          from {
+            transform: scale(0.9);
+            opacity: 0;
+          }
+        }
+
         @media (max-width: 860px) {
-          .nav-links {
+          .hamburger {
+            display: flex;
+          }
+          .btn-gold {
             display: none;
+          }
+          .nav-links {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-left: 0;
+            flex-direction: column;
+            gap: 0;
+            background: rgba(9, 14, 40, 0.99);
+            border-bottom: 1px solid rgba(230, 182, 76, 0.35);
+            padding: 0.5rem 1.5rem 1rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+          }
+          .nav-links.open {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto;
+          }
+          .nav-links a {
+            padding: 0.9rem 0;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(230, 182, 76, 0.12);
+          }
+          .nav-order {
+            display: block;
+            color: var(--gold-soft) !important;
+            font-weight: 700;
+            border-bottom: none !important;
           }
           .gallery {
             grid-template-columns: repeat(2, 1fr);

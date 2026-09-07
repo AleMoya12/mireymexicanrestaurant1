@@ -23,11 +23,11 @@ export const hero = {
 };
 
 export const featured = [
-  { src: asset("/img/spread.png"), alt: "Mesa llena de platillos mexicanos" },
-  { src: asset("/img/tostada_clean.png"), alt: "Tostada de birria con crema y queso" },
-  { src: asset("/img/chimichanga.png"), alt: "Chimichanga con arroz mexicano" },
-  { src: asset("/img/featured_clean.png"), alt: "Selección de platillos destacados" },
-  { src: asset("/img/tostada2.png"), alt: "Tostada de asada montada" },
+  { src: asset("/img/spread.png"), alt: "A table full of Mexican dishes" },
+  { src: asset("/img/tostada_clean.png"), alt: "Birria tostada with crema and cheese" },
+  { src: asset("/img/chimichanga.png"), alt: "Chimichanga with Mexican rice" },
+  { src: asset("/img/featured_clean.png"), alt: "Selection of featured dishes" },
+  { src: asset("/img/tostada2.png"), alt: "Loaded asada tostada" },
 ];
 
 export const specials = [
@@ -64,7 +64,7 @@ export const testimonials = [
   },
   {
     name: "Carlos Fernández",
-    place: "Evento familiar",
+    place: "Family event",
     quote:
       "Contratamos el servicio de taquiza de Mi Rey para un evento familiar y fue un éxito total. La carne estaba en su punto, las salsas tienen el toque casero auténtico y el equipo fue súper puntual y profesional. Si quieres quedar bien con tus invitados, esta es la mejor opción en Wilmington.",
   },
